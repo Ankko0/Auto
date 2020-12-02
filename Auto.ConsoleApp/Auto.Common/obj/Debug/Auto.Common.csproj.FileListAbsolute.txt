@@ -1,0 +1,10 @@
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Auto.Common.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Auto.Common.pdb
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Microsoft.Crm.Sdk.Proxy.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Microsoft.Xrm.Sdk.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Microsoft.Crm.Sdk.Proxy.xml
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\bin\Debug\Microsoft.Xrm.Sdk.xml
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\obj\Debug\Auto.Common.csproj.CoreCompileInputs.cache
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\obj\Debug\Auto.Common.csproj.CopyComplete
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\obj\Debug\Auto.Common.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Common\obj\Debug\Auto.Common.pdb

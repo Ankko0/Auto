@@ -1,0 +1,9 @@
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\bin\Debug\Auto.Plugins.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\bin\Debug\Auto.Plugins.pdb
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\bin\Debug\Auto.Common.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\bin\Debug\Auto.Common.pdb
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\obj\Debug\Auto.Plugins.csprojAssemblyReference.cache
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\obj\Debug\Auto.Plugins.csproj.CoreCompileInputs.cache
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\obj\Debug\Auto.Plugins.csproj.CopyComplete
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\obj\Debug\Auto.Plugins.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Plugins\obj\Debug\Auto.Plugins.pdb
