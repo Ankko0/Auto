@@ -11,9 +11,9 @@ namespace Auto.ConsoleApp
 {
     class CrmServiceAuto
     {
-        public void AddCommunication(IOrganizationService service, EntityCollection contactsWithoutComunication)
+        public void AddCommunication(IOrganizationService service, List<Contact> contactsWithoutComunication)
         {
-            foreach (var contact in contactsWithoutComunication.Entities.Select(e => e.ToEntity<Contact>()))
+            foreach (var contact in contactsWithoutComunication)
             {
                 if (contact.Telephone1 != null && contact.EMailAddress1 == null)
                 {
@@ -23,7 +23,7 @@ namespace Auto.ConsoleApp
                     newCommunication.nav_name = contact.FullName;
                     newCommunication.nav_main = true;
                     newCommunication.nav_type = nav_communication_nav_type.Telefon;
-                    newCommunication.nav_contactid.Id = contact.Id;
+                    newCommunication.nav_contactid.Id = (Guid)contact.ContactId;
 
                     service.Update(newCommunication);
 
@@ -37,7 +37,7 @@ namespace Auto.ConsoleApp
                     newCommunication.nav_name = contact.FullName;
                     newCommunication.nav_main = false;
                     newCommunication.nav_type = nav_communication_nav_type.E_mail;
-                    newCommunication.nav_contactid.Id = contact.Id;
+                    newCommunication.nav_contactid.Id = (Guid)contact.ContactId;
 
                     service.Update(newCommunication);
 
@@ -51,7 +51,7 @@ namespace Auto.ConsoleApp
                     newCommunication.nav_name = contact.FullName + " Phone";
                     newCommunication.nav_main = true;
                     newCommunication.nav_type = nav_communication_nav_type.Telefon;
-                    newCommunication.nav_contactid.Id = contact.Id;
+                    newCommunication.nav_contactid.Id = (Guid)contact.ContactId;
 
                     service.Update(newCommunication);
 
@@ -61,7 +61,7 @@ namespace Auto.ConsoleApp
                     newCommunication.nav_name = contact.FullName + "E-mail";
                     newCommunication.nav_main = false;
                     newCommunication.nav_type = nav_communication_nav_type.E_mail;
-                    newCommunication.nav_contactid.Id = contact.Id;
+                    newCommunication.nav_contactid.Id = (Guid)contact.ContactId;
 
                     service.Update(newCommunication);
 

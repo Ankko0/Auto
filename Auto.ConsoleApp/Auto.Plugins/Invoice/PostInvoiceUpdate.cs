@@ -1,10 +1,15 @@
-﻿using Auto.Plugins.Invoice.Handlers;
+﻿using Auto.Common.Entities;
+using Auto.Plugins.Invoice.Handlers;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Auto.Plugins.Invoice
 {
-    public sealed class PreInvoiceCreate : IPlugin
+    public sealed class PostInvoiceUpdate:IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -19,18 +24,23 @@ namespace Auto.Plugins.Invoice
 
             try
             {
-
                 InvoiceService invoiceService = new InvoiceService(service, traceService);
-                invoiceService.SetInvoiceType(targetInvoice);
-                invoiceService.RecountPaidAmount(targetInvoice);
-                //throw new InvalidPluginExecutionException("Должен был сработать");
+                Entity postImage = null;
+                if (pluginContext.PostEntityImages.Contains("nav_postinvoiceupdateimage") && pluginContext.PostEntityImages["nav_postinvoiceupdateimage"] is Entity)
+                {
+                    traceService.Trace("Получили PreEntityImages");
+                    postImage = (Entity)pluginContext.PostEntityImages["nav_postinvoiceupdateimage"];
+                }
+
+                traceService.Trace("вход в  RecountPaidAmount");
+                invoiceService.RecountPaidAmount(targetInvoice, postImage);
             }
             catch (Exception exc)
             {
                 traceService.Trace("Ошибка " + exc.ToString());
-
                 throw new InvalidPluginExecutionException(exc.Message);
             }
         }
     }
+
 }

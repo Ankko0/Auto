@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{24EC934C-CD2E-47D2-9BCF-DB31BD90F426}</ProjectGuid>
+    <ProjectGuid>{4AB6EF55-32B8-46BF-A4DE-5DA38F48DDA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Auto.Common</RootNamespace>
-    <AssemblyName>Auto.Common</AssemblyName>
+    <RootNamespace>Auto.Workflows</RootNamespace>
+    <AssemblyName>Auto.Workflows</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,25 +34,11 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Auto.Common.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Auto.Workflows.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.3\lib\net452\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.3\lib\net452\Microsoft.Xrm.Sdk.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,25 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CheckUniqMainTypeContactCommand.cs" />
-    <Compile Include="Commands\RecountPaidAmountCommand.cs" />
-    <Compile Include="Commands\SetInvoiceTypeCommand.cs" />
-    <Compile Include="Entities\Contact.cs" />
-    <Compile Include="Entities\CrmServiceContext.cs" />
-    <Compile Include="Entities\nav_agreement.cs" />
-    <Compile Include="Entities\nav_auto.cs" />
-    <Compile Include="Entities\nav_brand.cs" />
-    <Compile Include="Entities\nav_building.cs" />
-    <Compile Include="Entities\nav_communication.cs" />
-    <Compile Include="Entities\nav_credit.cs" />
-    <Compile Include="Entities\nav_invoice.cs" />
-    <Compile Include="Entities\nav_model.cs" />
-    <Compile Include="Entities\OptionSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Auto.Common.snk" />
-    <None Include="packages.config" />
+    <None Include="Auto.Workflows.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

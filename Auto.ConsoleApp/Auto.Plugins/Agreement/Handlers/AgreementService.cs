@@ -21,7 +21,6 @@ namespace Auto.Plugins.Agreement.Handlers
         {
             var agreement = targetInvoice.ToEntity<nav_agreement>();
 
-
             // Define Condition Values
             var QEnav_agreement_nav_contactid = agreement.nav_contactid.Id;
 
@@ -34,13 +33,14 @@ namespace Auto.Plugins.Agreement.Handlers
 
             // Define filter QEnav_agreement.Criteria
             QEnav_agreement.Criteria.AddCondition("nav_contactid", ConditionOperator.Equal, QEnav_agreement_nav_contactid);
+            
             traceService.Trace("Попытка выполнить RetrieveMultiple");
             var result = service.RetrieveMultiple(QEnav_agreement);
             traceService.Trace("RetrieveMultiple.Entities.Count = " + result.Entities.Count);
             traceService.Trace("contact.Id " + agreement.nav_contactid.Id.ToString());
             if (result.Entities.Count == 0)
             {
-                traceService.Trace("Вход в IF");
+                traceService.Trace("Вход в if");
                 Contact contact = new Contact();
                 contact.Id = agreement.nav_contactid.Id;
                 contact.nav_date = agreement.nav_date;

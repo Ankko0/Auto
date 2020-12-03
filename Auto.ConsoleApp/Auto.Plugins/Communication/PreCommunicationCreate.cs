@@ -1,10 +1,14 @@
-﻿using Auto.Plugins.Invoice.Handlers;
+﻿using Auto.Plugins.Communication.Handlers;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Auto.Plugins.Invoice
+namespace Auto.Plugins.Communication
 {
-    public sealed class PreInvoiceCreate : IPlugin
+    public sealed class PreCommunicationCreate:IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -12,17 +16,16 @@ namespace Auto.Plugins.Invoice
             traceService.Trace("Получили ITracingService");
 
             var pluginContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
-            var targetInvoice = (Entity)pluginContext.InputParameters["Target"];
+            var target = (Entity)pluginContext.InputParameters["Target"];
 
             var serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
             var service = serviceFactory.CreateOrganizationService(Guid.Empty);// null
 
             try
             {
-
-                InvoiceService invoiceService = new InvoiceService(service, traceService);
-                invoiceService.SetInvoiceType(targetInvoice);
-                invoiceService.RecountPaidAmount(targetInvoice);
+                CommunicationService commService = new CommunicationService(service, traceService);
+                commService.CheckUniqMainTypeContact(target);
+                //commService.RecountPaidAmount(targetInvoice);
                 //throw new InvalidPluginExecutionException("Должен был сработать");
             }
             catch (Exception exc)

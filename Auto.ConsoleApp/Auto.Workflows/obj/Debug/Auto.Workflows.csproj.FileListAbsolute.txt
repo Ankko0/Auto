@@ -1,0 +1,5 @@
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Workflows\bin\Debug\Auto.Workflows.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Workflows\bin\Debug\Auto.Workflows.pdb
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Workflows\obj\Debug\Auto.Workflows.csproj.CoreCompileInputs.cache
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Workflows\obj\Debug\Auto.Workflows.dll
+G:\Работа\Auto\Auto.ConsoleApp\Auto.Workflows\obj\Debug\Auto.Workflows.pdb

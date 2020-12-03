@@ -1,10 +1,15 @@
 ﻿using Auto.Plugins.Invoice.Handlers;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Auto.Plugins.Invoice
 {
-    public sealed class PreInvoiceCreate : IPlugin
+    /* Уточнить логику, нужен ли пересчет при удалении УЖЕ оплаченного счета (т.е. после перерасчета)*/
+    public sealed class PostIvoiceDelete 
     {
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -21,7 +26,6 @@ namespace Auto.Plugins.Invoice
             {
 
                 InvoiceService invoiceService = new InvoiceService(service, traceService);
-                invoiceService.SetInvoiceType(targetInvoice);
                 invoiceService.RecountPaidAmount(targetInvoice);
                 //throw new InvalidPluginExecutionException("Должен был сработать");
             }

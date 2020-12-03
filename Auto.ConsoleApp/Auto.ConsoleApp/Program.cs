@@ -21,11 +21,7 @@ namespace Auto.ConsoleApp
             {
                 Console.WriteLine(client.LastCrmException);
             }
-
-            
-
-
-
+            var service = (IOrganizationService)client;
             QueryExpression query = new QueryExpression(nav_communication.EntityLogicalName);
             query.ColumnSet = new ColumnSet(nav_communication.Fields.nav_contactid,
                 nav_communication.Fields.nav_email,
@@ -42,62 +38,38 @@ namespace Auto.ConsoleApp
                 var contact = client.Retrieve(Contact.EntityLogicalName, entity.nav_contactid.Id, new ColumnSet(Contact.Fields.Telephone1, Contact.Fields.EMailAddress1)).ToEntity<Contact>();
                 Contact contactToUpdate = new Contact();
 
-                var service = (IOrganizationService)client;
-                // Define Condition Values
-                var QEnav_agreement_nav_contactid = "9e695fcd-f332-eb11-a813-000d3abe494b";
-
-                // Instantiate QueryExpression QEnav_agreement
-                var QEnav_agreement = new QueryExpression("nav_agreement");
-                QEnav_agreement.TopCount = 50;
-
-                // Add columns to QEnav_agreement.ColumnSet
-                QEnav_agreement.ColumnSet.AddColumns("nav_contactid");
-
-                // Define filter QEnav_agreement.Criteria
-                QEnav_agreement.Criteria.AddCondition("nav_contactid", ConditionOperator.Equal, QEnav_agreement_nav_contactid);
-
-                var result2 = service.RetrieveMultiple(QEnav_agreement);
-
                 if (entity.nav_type == nav_communication_nav_type.Telefon && contact.Telephone1 == null)
                 {
                     contact.Telephone1 = entity.nav_phone;
-                    client.Update(contact);
+                    service.Update(contact);
                 }
                 if (entity.nav_type == nav_communication_nav_type.E_mail && contact.EMailAddress1 == null)
                 {
                     contact.EMailAddress1 = entity.nav_email;
-                    client.Update(contact);
+                    service.Update(contact);
                 }
 
-                
-                //Console.WriteLine($"{entity.Id} {entity.GetAttributeValue<string>("name") }");
             }
 
-            /*QueryExpression query2 = new QueryExpression(Contact.EntityLogicalName);
-            query.Criteria = new FilterExpression(LogicalOperator.And);
-            query.Criteria.AddCondition(new ConditionExpression("AttributeChildEntityEntityReferenceToParentEntity", ConditionOperator.Equal, new Guid("GuidOfParententity")));
-
-            RetrieveEntityRequest retrieveBankAccountEntityRequest = new RetrieveEntityRequest
-
+            var QEcontact = new QueryExpression("contact");
+            QEcontact.TopCount = 1000;
+            QEcontact.ColumnSet.AddColumns("contactid", "emailaddress1", "telephone1");
+            var allContacts = service.RetrieveMultiple(QEcontact);
+            List<Contact> contactsWithoutCommunication = new List<Contact>();
+            foreach (var item in allContacts.Entities.Select(t => t.ToEntity<Contact>()))
             {
+                try { 
+                    var communication = service.Retrieve(nav_communication.EntityLogicalName, (Guid)item.ContactId, new ColumnSet(nav_communication.Fields.nav_contactid)); 
+                }
+                catch(System.ServiceModel.FaultException ex)
+                {
+                    contactsWithoutCommunication.Add(item);
+                }
 
-                EntityFilters = EntityFilters.Relationships,
+            }
+            CrmServiceAuto serviceAuto = new CrmServiceAuto();
+            serviceAuto.AddCommunication(service, contactsWithoutCommunication);
 
-                LogicalName = "Contact"
-
-            };
-
-            RetrieveEntityResponse retrieveBankAccountEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
-
-            var oneToNRelationships = retrieveBankAccountEntityResponse.EntityMetadata.OneToManyRelationships;
-
-            foreach (var oneToNRelationship in oneToNRelationships)
-
-            {
-                int temp123 = 5;
-                // your code
-
-            }*/
 
             Console.Read();
         }

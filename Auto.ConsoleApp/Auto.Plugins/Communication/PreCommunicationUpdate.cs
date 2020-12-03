@@ -1,4 +1,4 @@
-﻿using Auto.Plugins.Agreement.Handlers;
+﻿using Auto.Plugins.Communication.Handlers;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auto.Plugins.Agreement
+namespace Auto.Plugins.Communication
 {
-    public sealed class PreAgreementCreate:IPlugin
+    public sealed class PreCommunicationUpdate : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -16,15 +16,22 @@ namespace Auto.Plugins.Agreement
             traceService.Trace("Получили ITracingService");
 
             var pluginContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
-            var targetInvoice = (Entity)pluginContext.InputParameters["Target"];
+            var target = (Entity)pluginContext.InputParameters["Target"];
+
             var serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
             var service = serviceFactory.CreateOrganizationService(Guid.Empty);// null
 
             try
             {
-                AgreementService invoiceService = new AgreementService(service, traceService);
-                invoiceService.CopyName(targetInvoice);
-                //throw new InvalidPluginExecutionException("Должен был сработать");
+                Entity postImage = null;
+                if (pluginContext.PreEntityImages.Contains("nav_precommunicationupdateimage") && pluginContext.PreEntityImages["nav_precommunicationupdateimage"] is Entity)
+                {
+                    traceService.Trace("Получили PreEntityImages");
+                    postImage = (Entity)pluginContext.PreEntityImages["nav_precommunicationupdateimage"];
+                }
+                CommunicationService commService = new CommunicationService(service, traceService);
+                commService.CheckUniqMainTypeContact(target, postImage);
+
             }
             catch (Exception exc)
             {

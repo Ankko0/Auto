@@ -10,9 +10,9 @@ namespace Auto.Common.Commands
 {
     public class SetInvoiceTypeCommand
     {
-        public void Execute(Entity target)
+        public void Execute(nav_invoice invoice)
         {
-            var invoice = target.ToEntity<nav_invoice>();
+
             if (invoice.nav_type == null)
             {
                 invoice.nav_type = nav_invoice_nav_type.Ruchnoe_sozdanie;
