@@ -21,6 +21,8 @@ namespace Auto.ConsoleApp
             {
                 Console.WriteLine(client.LastCrmException);
             }
+            Console.WriteLine("Выбирать все объекты средства связи, где поле [основной]=Да, " +
+                "и устанавливить значения на связанном объекте Контакт значения");
             var service = (IOrganizationService)client;
             QueryExpression query = new QueryExpression(nav_communication.EntityLogicalName);
             query.ColumnSet = new ColumnSet(nav_communication.Fields.nav_contactid,
@@ -33,44 +35,63 @@ namespace Auto.ConsoleApp
             query.Criteria.AddCondition(nav_communication.Fields.nav_main, ConditionOperator.Equal, true);
             var result = client.RetrieveMultiple(query);
 
-            foreach (var entity in result.Entities.Select(e => e.ToEntity<nav_communication>()))
-            {
-                var contact = client.Retrieve(Contact.EntityLogicalName, entity.nav_contactid.Id, new ColumnSet(Contact.Fields.Telephone1, Contact.Fields.EMailAddress1)).ToEntity<Contact>();
-                Contact contactToUpdate = new Contact();
-
-                if (entity.nav_type == nav_communication_nav_type.Telefon && contact.Telephone1 == null)
+            if (result.Entities.Count > 0)
+                foreach (var entity in result.Entities.Select(e => e.ToEntity<nav_communication>()))
                 {
-                    contact.Telephone1 = entity.nav_phone;
-                    service.Update(contact);
-                }
-                if (entity.nav_type == nav_communication_nav_type.E_mail && contact.EMailAddress1 == null)
-                {
-                    contact.EMailAddress1 = entity.nav_email;
-                    service.Update(contact);
-                }
+                    var contact = client.Retrieve(Contact.EntityLogicalName, entity.nav_contactid.Id, new ColumnSet(Contact.Fields.Telephone1, Contact.Fields.EMailAddress1)).ToEntity<Contact>();
+                    Contact contactToUpdate = new Contact();
 
-            }
+                    if (entity.nav_type == nav_communication_nav_type.Telefon && contact.Telephone1 == null)
+                    {
+                        contact.Telephone1 = entity.nav_phone;
+                        service.Update(contact);
+                    }
+                    if (entity.nav_type == nav_communication_nav_type.E_mail && contact.EMailAddress1 == null)
+                    {
+                        contact.EMailAddress1 = entity.nav_email;
+                        service.Update(contact);
+                    }
 
+                }
+            Console.WriteLine("Закончили");
+
+            Console.WriteLine("Выбрать Контакты и нет связанных объектов Контактная информация");
             var QEcontact = new QueryExpression("contact");
             QEcontact.TopCount = 1000;
             QEcontact.ColumnSet.AddColumns("contactid", "emailaddress1", "telephone1");
             var allContacts = service.RetrieveMultiple(QEcontact);
+
+            var QEnav_communication = new QueryExpression("nav_communication");
+            QEnav_communication.TopCount = 100;
+            QEnav_communication.ColumnSet.AddColumns("nav_contactid", "nav_name");
+            var allCommunications = service.RetrieveMultiple(QEnav_communication);
+
             List<Contact> contactsWithoutCommunication = new List<Contact>();
-            foreach (var item in allContacts.Entities.Select(t => t.ToEntity<Contact>()))
+            foreach (var contact in allContacts.Entities.Select(t => t.ToEntity<Contact>()))
             {
-                try { 
-                    var communication = service.Retrieve(nav_communication.EntityLogicalName, (Guid)item.ContactId, new ColumnSet(nav_communication.Fields.nav_contactid)); 
-                }
-                catch(System.ServiceModel.FaultException ex)
+                bool isInCommunication = false;
+                foreach (var communication in allCommunications.Entities.Select(t => t.ToEntity<nav_communication>()))
                 {
-                    contactsWithoutCommunication.Add(item);
+                    if (communication.nav_contactid == null || communication.nav_contactid.Id == contact.ContactId)
+                    {
+                        isInCommunication = true;
+                        break;
+                    }
                 }
 
+                if (!isInCommunication)
+                    contactsWithoutCommunication.Add(contact);
             }
-            CrmServiceAuto serviceAuto = new CrmServiceAuto();
-            serviceAuto.AddCommunication(service, contactsWithoutCommunication);
 
+            if (contactsWithoutCommunication.Count != 0)
+            {
+                CrmServiceAuto serviceAuto = new CrmServiceAuto();
+                serviceAuto.AddCommunication(service, contactsWithoutCommunication);
+            }
+            else
+                Console.WriteLine("Контактов нет");
 
+            Console.WriteLine("Закончили");
             Console.Read();
         }
     }

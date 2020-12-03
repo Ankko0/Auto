@@ -37,8 +37,7 @@ namespace Auto.ConsoleApp
                     newCommunication.nav_name = contact.FullName;
                     newCommunication.nav_main = false;
                     newCommunication.nav_type = nav_communication_nav_type.E_mail;
-                    newCommunication.nav_contactid.Id = (Guid)contact.ContactId;
-
+                    newCommunication.nav_contactid = new EntityReference(contact.LogicalName, (Guid)contact.ContactId);
                     service.Update(newCommunication);
 
                 }
