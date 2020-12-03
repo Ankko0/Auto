@@ -21,17 +21,10 @@ namespace Auto.Plugins.Agreement.Handlers
         {
             var agreement = targetInvoice.ToEntity<nav_agreement>();
 
-            // Define Condition Values
             var QEnav_agreement_nav_contactid = agreement.nav_contactid.Id;
-
-            // Instantiate QueryExpression QEnav_agreement
             var QEnav_agreement = new QueryExpression("nav_agreement");
             QEnav_agreement.TopCount = 50;
-
-            // Add columns to QEnav_agreement.ColumnSet
             QEnav_agreement.ColumnSet.AddColumns("nav_contactid");
-
-            // Define filter QEnav_agreement.Criteria
             QEnav_agreement.Criteria.AddCondition("nav_contactid", ConditionOperator.Equal, QEnav_agreement_nav_contactid);
             
             traceService.Trace("Попытка выполнить RetrieveMultiple");

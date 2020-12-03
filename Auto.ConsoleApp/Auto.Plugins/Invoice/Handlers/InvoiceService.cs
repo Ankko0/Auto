@@ -34,9 +34,7 @@ namespace Auto.Plugins.Invoice.Handlers
                 invoice.nav_amount = invoiceImage.nav_amount;
 
             }
-            //var invoiceImage = new nav_invoice();
             RecountPaidAmountCommand recount = new RecountPaidAmountCommand(service, traceService);
-
             if (invoice.nav_fact == true)
             {
                 traceService.Trace("Счет оплачен. Заход в if");

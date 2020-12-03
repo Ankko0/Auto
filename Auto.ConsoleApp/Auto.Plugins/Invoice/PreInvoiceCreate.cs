@@ -19,16 +19,13 @@ namespace Auto.Plugins.Invoice
 
             try
             {
-
                 InvoiceService invoiceService = new InvoiceService(service, traceService);
                 invoiceService.SetInvoiceType(targetInvoice);
                 invoiceService.RecountPaidAmount(targetInvoice);
-                //throw new InvalidPluginExecutionException("Должен был сработать");
             }
             catch (Exception exc)
             {
                 traceService.Trace("Ошибка " + exc.ToString());
-
                 throw new InvalidPluginExecutionException(exc.Message);
             }
         }

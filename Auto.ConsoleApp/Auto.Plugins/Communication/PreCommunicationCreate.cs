@@ -25,8 +25,6 @@ namespace Auto.Plugins.Communication
             {
                 CommunicationService commService = new CommunicationService(service, traceService);
                 commService.CheckUniqMainTypeContact(target);
-                //commService.RecountPaidAmount(targetInvoice);
-                //throw new InvalidPluginExecutionException("Должен был сработать");
             }
             catch (Exception exc)
             {

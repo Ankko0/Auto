@@ -24,7 +24,6 @@ namespace Auto.Plugins.Agreement
             {
                 AgreementService invoiceService = new AgreementService(service, traceService);
                 invoiceService.CopyName(targetInvoice);
-                //throw new InvalidPluginExecutionException("Должен был сработать");
             }
             catch (Exception exc)
             {
