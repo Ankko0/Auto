@@ -17,7 +17,7 @@ namespace Auto.Plugins.Agreement.Handlers
         }
 
 
-        public void CopyName(Entity targetInvoice)
+        public void SetDateFirstCommunication(Entity targetInvoice)
         {
             var agreement = targetInvoice.ToEntity<nav_agreement>();
 

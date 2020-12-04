@@ -23,7 +23,7 @@ namespace Auto.Plugins.Agreement
             try
             {
                 AgreementService invoiceService = new AgreementService(service, traceService);
-                invoiceService.CopyName(targetInvoice);
+                invoiceService.SetDateFirstCommunication(targetInvoice);
             }
             catch (Exception exc)
             {
